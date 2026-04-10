@@ -10,4 +10,7 @@ public interface IMemberRepository {
     void addMember(Member member);
 
     void updateMember(Member member);
+
+    void deleteMember(Member member);
+
 }

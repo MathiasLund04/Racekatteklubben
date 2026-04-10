@@ -5,20 +5,20 @@ public class Cat {
     private String name;
     private String breed;
     private int age;
-    private String dad;
-    private String mom;
+    private String father;
+    private String mother;
     private String breeder;
     private Member owner;
     private String emsCode;
 
     public Cat(){}
 
-    public Cat(String name, String breed, int age, String dad, String mom, String breeder, Member owner, String emsCode) {
+    public Cat(String name, String breed, int age, String father, String mother, String breeder, Member owner, String emsCode) {
         this.name = name;
         this.breed = breed;
         this.age = age;
-        this.dad = dad;
-        this.mom = mom;
+        this.father = father;
+        this.mother = mother;
         this.breeder = breeder;
         this.owner = owner;
         this.emsCode = emsCode;
@@ -27,6 +27,7 @@ public class Cat {
     public int getId() {
         return id;
     }
+    public void setId(int id) {this.id = id;}
 
     public String getName() {
         return name;
@@ -49,18 +50,18 @@ public class Cat {
         this.age = age;
     }
 
-    public String getDad() {
-        return dad;
+    public String getFather() {
+        return father;
     }
-    public void setDad(String dad) {
-        this.dad = dad;
+    public void setFather(String father) {
+        this.father = father;
     }
 
-    public String getMom() {
-        return mom;
+    public String getMother() {
+        return mother;
     }
-    public void setMom(String mom) {
-        this.mom = mom;
+    public void setMother(String mother) {
+        this.mother = mother;
     }
 
     public String getBreeder() {

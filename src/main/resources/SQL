@@ -10,13 +10,15 @@ PasswordHash varchar(255) not null
 Create table cat (
 Id int primary key not null,
 Name varchar(50) not null,
-Owner Varchar(50) not null,
+Owner Varchar(255) not null,
 Breed varchar(50) not null,
 EMSCode varChar(255) not null,
 Age int not null,
 Father varchar(50),
 Mother varchar(50),
-Breeder varchar(50)
+Breeder varchar(50),
+
+FOREIGN KEY (Owner) REFERENCES member(Email)
 );
 
 

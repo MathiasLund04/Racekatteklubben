@@ -11,6 +11,6 @@ public interface ICatRepository {
     List<Cat> getCatsByMother(String mother);
     List<Cat> getCatsByFather(String father);
     void addCat(Cat cat);
-    void updateCat(Cat cat);
-    void removeCat(int id);
+    void updateCat(int id, Cat cat);
+    void removeCat(int id, Cat cat);
 }

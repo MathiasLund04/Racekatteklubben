@@ -4,6 +4,11 @@ public class Member {
     private String name;
     private String email;
     private String passwordHash;
+
+    public Member(){
+
+    }
+
     public Member(String name, String email, String passwordHash) {
         this.name = name;
         this.email = email;

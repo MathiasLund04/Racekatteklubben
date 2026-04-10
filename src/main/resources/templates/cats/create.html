@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret kat</title>
+</head>
+<body>
+
+<h1>Opret en kat</h1>
+
+<form th:action="@{/cats/create}" method="post" th:object="${cat}">
+
+    <label for="name">Navn</label>
+    <input type="text" id="name" th:field="*{name}" required><br>
+
+    <label for="breed">Race</label>
+    <input type="text" id="breed" th:field="*{breed}" required><br>
+
+    <label for="age">Alder</label>
+    <input type="number" id="age" th:field="*{age}" required><br>
+
+    <label for="father">Far</label>
+    <input type="text" id="father" th:field="*{father}"><br>
+
+    <label for="mother">Mor</label>
+    <input type="text" id="mother" th:field="*{mother}"><br>
+
+    <label for="breeder">Opdrætter</label>
+    <input type="text" id="breeder" th:field="*{breeder}"><br>
+
+    <label for="emsCode">EMS‑kode</label>
+    <input type="text" id="emsCode" th:field="*{emsCode}"><br>
+
+    <button type="submit">Opret kat</button>
+
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+</form>
+
+</body>
+</html>

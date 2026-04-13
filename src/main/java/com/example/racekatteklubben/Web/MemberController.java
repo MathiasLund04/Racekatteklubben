@@ -1,7 +1,7 @@
 package com.example.racekatteklubben.Web;
 
+import com.example.racekatteklubben.Application.CatService;
 import com.example.racekatteklubben.Application.MemberService;
-import com.example.racekatteklubben.Application.Validation.ValidationException;
 import com.example.racekatteklubben.Domain.Member;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final CatService catService;
 
 
-    public MemberController(MemberService memberService){
+    public MemberController(MemberService memberService, CatService catService) {
         this.memberService = memberService;
+        this.catService = catService;
     }
 
     @GetMapping("/register")
@@ -24,7 +26,6 @@ public class MemberController {
         model.addAttribute("member", new Member());
         return "/members/register";
     }
-
 
     @GetMapping("/login")
     public String login(){
@@ -39,6 +40,7 @@ public class MemberController {
             return "redirect:/members/login";
         }
         model.addAttribute("loggedInMember", loggedInMember);
+        model.addAttribute("cats", catService.getCatsByOwner(loggedInMember));
         return "/members/home";
     }
 
@@ -56,7 +58,7 @@ public class MemberController {
 
         session.setAttribute("loggedInMember", loggedInMember);
 
-        return "/members/home";
+        return "redirect:/members/home";
 
     }
 

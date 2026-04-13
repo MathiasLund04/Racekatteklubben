@@ -22,6 +22,7 @@ public class JdbcCatRepository implements ICatRepository {
     public Cat getCatById(int id) {
         String sql = """
                     SELECT 
+                        Id,
                         Name,
                         Owner,
                         Breed,
@@ -44,7 +45,7 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.setOwner(m);
 
                 cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("Ems_code"));
+                cat.setEmsCode(rs.getString("EMScode"));
                 cat.setAge(rs.getInt("Age"));
                 cat.setFather(rs.getString("Father"));
                 cat.setMother(rs.getString("Mother"));
@@ -60,6 +61,7 @@ public class JdbcCatRepository implements ICatRepository {
     public List<Cat> getCatsByOwner(Member owner){
         String sql = """
                     SELECT 
+                        Id,
                         Name,
                         Owner,
                         Breed,
@@ -76,14 +78,9 @@ public class JdbcCatRepository implements ICatRepository {
                 Cat cat = new Cat();
                 cat.setId(rs.getInt("id"));
                 cat.setName(rs.getString("Name"));
-
-                //Da Owner er en foreign key som referer til en members email og et cat objekt indeholder en member, så skal man lige oprette en member ud fra den hentede owner i DB
-                Member m = new Member();
-                m.setEmail(rs.getString("Owner"));
-                cat.setOwner(m);
-
+                cat.setOwner(owner);
                 cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("Ems_code"));
+                cat.setEmsCode(rs.getString("EMSCode"));
                 cat.setAge(rs.getInt("Age"));
                 cat.setFather(rs.getString("Father"));
                 cat.setMother(rs.getString("Mother"));
@@ -97,6 +94,7 @@ public class JdbcCatRepository implements ICatRepository {
     public List<Cat> getCatsByBreed(String breed){
         String sql = """
                     SELECT 
+                        Id,
                         Name,
                         Owner,
                         Breed,
@@ -114,12 +112,13 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.setId(rs.getInt("id"));
                 cat.setName(rs.getString("Name"));
 
+                //Da Owner er en foreign key som referer til en members email og et cat objekt indeholder en member, så skal man lige oprette en member ud fra den hentede owner i DB
                 Member m = new Member();
                 m.setEmail(rs.getString("Owner"));
                 cat.setOwner(m);
 
                 cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("Ems_code"));
+                cat.setEmsCode(rs.getString("EMSCode"));
                 cat.setAge(rs.getInt("Age"));
                 cat.setFather(rs.getString("Father"));
                 cat.setMother(rs.getString("Mother"));
@@ -134,6 +133,7 @@ public class JdbcCatRepository implements ICatRepository {
     public List<Cat> getCatsByMother(String mother){
         String sql = """
                     SELECT 
+                        Id,
                         Name,
                         Owner,
                         Breed,
@@ -156,7 +156,7 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.setOwner(m);
 
                 cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("Ems_code"));
+                cat.setEmsCode(rs.getString("EMSCode"));
                 cat.setAge(rs.getInt("Age"));
                 cat.setFather(rs.getString("Father"));
                 cat.setMother(rs.getString("Mother"));
@@ -170,6 +170,7 @@ public class JdbcCatRepository implements ICatRepository {
     public List<Cat> getCatsByFather(String father){
         String sql = """
                     SELECT 
+                        Id,
                         Name,
                         Owner,
                         Breed,
@@ -192,7 +193,7 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.setOwner(m);
 
                 cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("Ems_code"));
+                cat.setEmsCode(rs.getString("EMSCode"));
                 cat.setAge(rs.getInt("Age"));
                 cat.setFather(rs.getString("Father"));
                 cat.setMother(rs.getString("Mother"));
@@ -206,12 +207,12 @@ public class JdbcCatRepository implements ICatRepository {
     public void addCat(Cat cat){
         String sql = """
                     INSERT INTO cat
-                    (Name, Ownerl, Breed, EmsCode, Age, Father, Mother, Breeder)
+                    (Name, Owner, Breed, EMSCode, Age, Father, Mother, Breeder)
                     values (?, ?, ?, ?, ?, ?, ?, ?)
                     """;
         jdbcTemp.update(sql,
                 cat.getName(),
-                cat.getOwner() != null ? cat.getOwner() : null,
+                cat.getOwner() != null ? cat.getOwner().getEmail() : null,
                 cat.getBreed(),
                 cat.getEmsCode(),
                 cat.getAge(),

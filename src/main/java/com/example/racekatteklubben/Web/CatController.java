@@ -1,11 +1,15 @@
 package com.example.racekatteklubben.Web;
 
 import com.example.racekatteklubben.Application.CatService;
+import com.example.racekatteklubben.Application.MemberService;
 import com.example.racekatteklubben.Domain.Cat;
+import com.example.racekatteklubben.Domain.Member;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -13,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class CatController {
 
     private final CatService catService;
-    public CatController(CatService catService) {
+    private final MemberService memberService;
+    public CatController(CatService catService, MemberService memberService) {
         this.catService = catService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/create")
@@ -24,16 +30,12 @@ public class CatController {
     }
 
     @PostMapping("/create")
-    public String CreateCat(@ModelAttribute("cat") Cat cat, Model model) {
+    public String CreateCat(@ModelAttribute("cat") Cat cat,HttpSession session , Model model) {
+        Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+        cat.setOwner(loggedInMember);
+        catService.addCat(cat);
+        return "redirect:/cats/success";
 
-        try {
-            catService.addCat(cat);
-            return "redirect:/cats/success";
-
-        }catch(Exception e) {
-            model.addAttribute("errMessage", e.getMessage());
-            return "cats/create";
-        }
     }
 
     @GetMapping("/update/{id}")
@@ -48,9 +50,23 @@ public class CatController {
         return "cats/success";
     }
 
+    @GetMapping("/{owner}")
+    public String getCatsByOwner(@PathVariable String email, Model model) {
+        Member owner = memberService.getMember(email);
+        List<Cat> cats = catService.getCatsByOwner(owner);
+        model.addAttribute("cats", cats);
+        model.addAttribute("member", owner);
+
+        return "cats/list";
+    }
+
     @GetMapping("/catOwner")
-    public String catOwner(@ModelAttribute("cat") Cat cat , Model model, HttpSession session) {
-        model.addAttribute("cat", new Cat());
+    public String catOwner( Model model, HttpSession session) {
+        Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+
+        model.addAttribute("loggedInMember", loggedInMember);
+        model.addAttribute("cats", catService.getCatsByOwner(loggedInMember));
+
         return "cats/catOwner";
     }
 }

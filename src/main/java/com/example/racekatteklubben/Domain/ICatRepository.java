@@ -1,5 +1,7 @@
 package com.example.racekatteklubben.Domain;
 
+import org.springframework.context.annotation.Bean;
+
 import java.util.List;
 
 public interface ICatRepository {

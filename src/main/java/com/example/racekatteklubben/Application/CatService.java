@@ -31,34 +31,39 @@ public class CatService {
 
     }
 
-    public void removeCat(int id, Cat cat){
+    public void removeCat(int id){
         //WIP
-        cRepo.removeCat(id, cat);
+        validation.validateInt(id);
+        cRepo.removeCat(id);
     }
 
     public Cat getCatById(int id){
         //WIP
-        return null;
+        validation.validateInt(id);
+        return cRepo.getCatById(id);
     }
 
     public List<Cat> getCatsByOwner(Member owner){
         //WIP
-        return null;
+        return cRepo.getCatsByOwner(owner);
     }
 
     public List<Cat> getCatsByBreed(String breed){
         //WIP
-        return null;
+        validation.validateString(breed);
+        return cRepo.getCatsByBreed(breed);
     }
 
     public List<Cat> getCatsByFather(String father){
         //WIP
-        return null;
+        validation.validateString(father);
+        return cRepo.getCatsByFather(father);
     }
 
     public List<Cat> getCatsByMother(String mother){
         //WIP
-        return null;
+        validation.validateString(mother);
+        return cRepo.getCatsByMother(mother);
     }
 
 }

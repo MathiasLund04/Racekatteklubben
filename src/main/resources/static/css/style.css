@@ -1,0 +1,150 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #222;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.header {
+    background-color: #1f2937;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 70px;
+    position: relative;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-list a:hover {
+    text-decoration: underline;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.burger span {
+    width: 28px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    display: block;
+}
+
+.hero {
+    background: linear-gradient(135deg, #aa6832, #d5b484);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.btn {
+    display: inline-block;
+    background-color: white;
+    color: #926b52;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.content {
+    padding: 50px 0;
+    background-color: white;
+}
+
+.content h2 {
+    margin-bottom: 1rem;
+}
+
+/* Mobil */
+@media (max-width: 768px) {
+    .burger {
+        display: flex;
+    }
+
+    .nav {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: #f6904d;
+        display: none;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .nav-list li {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-list a {
+        display: block;
+        padding: 1rem;
+    }
+
+    .menu-toggle:checked + .burger + .nav {
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+}

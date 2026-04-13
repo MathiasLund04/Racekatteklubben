@@ -2,6 +2,7 @@ package com.example.racekatteklubben.Web;
 
 import com.example.racekatteklubben.Application.CatService;
 import com.example.racekatteklubben.Domain.Cat;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,21 @@ public class CatController {
         }
     }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable int id, Model model) {
+        Cat cat = catService.getCatById(id);
+        model.addAttribute("cat", cat);
+        return "cats/update";
+    }
+
     @GetMapping("/success")
     public String success() {
         return "cats/success";
+    }
+
+    @GetMapping("/catOwner")
+    public String catOwner(@ModelAttribute("cat") Cat cat , Model model, HttpSession session) {
+        model.addAttribute("cat", new Cat());
+        return "cats/catOwner";
     }
 }

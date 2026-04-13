@@ -247,7 +247,7 @@ public class JdbcCatRepository implements ICatRepository {
                 id
         );
     }
-    public void removeCat(int id, Cat cat){
+    public void removeCat(int id){
         String sql = """
                 DELETE FROM cat
                 WHERE id = ?

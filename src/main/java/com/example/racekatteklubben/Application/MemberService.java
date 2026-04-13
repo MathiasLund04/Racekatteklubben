@@ -19,8 +19,12 @@ public class MemberService {
         this.validation = validation;
     }
 
-    public Member login(String email, String password) {
+    public Member login(String email, String password) throws ValidationException {
         //WIP
+        email = email.trim();
+        password = password.trim();
+
+
         if (email.isBlank() || password.isBlank()) {
             throw new ValidationException("Email og password skal udfyldes");
         }
@@ -34,7 +38,7 @@ public class MemberService {
         return member;
     }
 
-    public void registerMember(Member member) {
+    public void registerMember(Member member) throws ValidationException {
         //WIP
         // Valider input
         validation.validateMember(member);
@@ -46,14 +50,17 @@ public class MemberService {
         }
 
         // Hash password
-        String hashed = BCrypt.hashpw(member.getPasswordHash(), BCrypt.gensalt());
+        String hashed = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
         member.setPasswordHash(hashed);
 
+        member.setEmail(member.getEmail().trim());
+        member.setPassword(member.getPassword().trim());
         // gem i database
         mRepo.addMember(member);
+        System.out.println("RAW password: " + member.getPassword());
     }
 
-    public Member getMember(String email) {
+    public Member getMember(String email) throws ValidationException {
         //WIP
         if (email.isEmpty()) {
             throw new ValidationException("Email skal udfyldes");
@@ -63,21 +70,22 @@ public class MemberService {
 
     public List<Member> getMembers() {
         //WIP
-        return null;
+        return mRepo.getAllMembers();
     }
 
-    public void updateMember(Member member) {
+    public void updateMember(Member member) throws ValidationException {
         //WIP
         validation.validateMember(member);
         mRepo.updateMember(member);
     }
 
-    public void deleteMember(Member member) {
+    public void deleteMember(Member member) throws ValidationException {
         //WIP
+        validation.validateString(member.getEmail());
         mRepo.deleteMember(member);
     }
 
-    public void validateMember(Member member) {
+    public void validateMember(Member member) throws ValidationException {
         //WIP
         validation.validateMember(member);
     }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medlems katte</title>
+</head>
+<body>
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
+
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+        </label>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/">Forside</a></li>
+                <li><a href="/cats/create">Opret kat</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="content container">
+    <h1>Liste over dine katte</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Alder</th>
+            <th>Race</th>
+            <th>EMS‑kode</th>
+            <th>Far</th>
+            <th>Mor</th>
+            <th>Opdrætter</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="cat : ${cats}">
+            <td th:text="${cat.name}"></td>
+            <td th:text="${cat.age}"></td>
+            <td th:text="${cat.breed}"></td>
+            <td th:text="${cat.emsCode}"></td>
+            <td th:text="${cat.father}"></td>
+            <td th:text="${cat.mother}"></td>
+            <td th:text="${cat.breeder}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+
+</body>
+</html>

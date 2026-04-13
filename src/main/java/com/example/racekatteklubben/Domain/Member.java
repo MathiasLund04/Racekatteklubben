@@ -3,13 +3,13 @@ package com.example.racekatteklubben.Domain;
 public class Member {
     private String name;
     private String email;
+    private String password;
     private String passwordHash;
 
     public Member(){
-
     }
 
-    public Member(String name, String email, String passwordHash) {
+    public Member(String name, String email,String passwordHash) {
         this.name = name;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -34,6 +34,13 @@ public class Member {
     }
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

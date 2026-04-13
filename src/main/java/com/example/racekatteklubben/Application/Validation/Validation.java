@@ -18,19 +18,19 @@ public class Validation {
     }
 
     public void validateCat(Cat cat) throws ValidationException {
-        if (cat.getName() == null || cat.getName().equals("")) {
+        if (cat.getName() == null || cat.getName().isEmpty()) {
             throw new ValidationException("Kat skal have navn");
         }
         if (cat.getAge() <= 0){
             throw new ValidationException("Kat skal have gyldig alder");
         }
-        if (cat.getBreed() == null || cat.getBreed().equals("")) {
+        if (cat.getBreed() == null || cat.getBreed().isEmpty()) {
             throw new ValidationException("Katterace skal angives");
         }
-        if (cat.getOwner().equals("")) {
+        if (cat.getOwner().getName().isEmpty()) {
             throw new ValidationException("Ejer skal angives");
         }
-        if (cat.getEmsCode().equals("")) {
+        if (cat.getEmsCode().isEmpty()) {
             throw new ValidationException("EMSKode skal angives");
         }
     }
@@ -38,19 +38,31 @@ public class Validation {
     public void validateMember(Member member) throws ValidationException {
         //WIP
 
-        if (member.getName() == null || member.getName().equals("")) {
+        if (member.getName() == null || member.getName().isEmpty()) {
             throw new ValidationException("Medlem skal have navn");
         }
-        if (member.getEmail() == null || member.getEmail().equals("")) {
+        if (member.getEmail() == null || member.getEmail().isEmpty()) {
             throw new ValidationException("Medlem skal have email");
         }
         if (!member.getEmail().contains("@")){
             throw new ValidationException("Email skal indeholde '@'");
         }
-        if (member.getPasswordHash() == null || member.getPasswordHash().equals("")) {
+        if (member.getPassword() == null || member.getPassword().isEmpty()) {
             throw new ValidationException("Medlem skal have kodeord");
         }
 
+    }
+
+    public void validateString(String word) throws ValidationException {
+        if (word.isEmpty()){
+            throw new ValidationException("Venligst udfyld dette");
+        }
+    }
+
+    public void validateInt(int number) throws ValidationException {
+        if (number <= 0){
+            throw new ValidationException("Venligst indtast et tal over 0");
+        }
     }
 
 }

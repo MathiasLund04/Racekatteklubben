@@ -10,13 +10,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     public String handleValidationException(ValidationException ex, Model model) {
         model.addAttribute("errMessage", ex.getMessage());
-        return "/error";
+        return "error";
     }
 
     @ExceptionHandler(Exception.class)
     public String handleException(Exception ex, Model model) {
         model.addAttribute("errMessage", ex.getMessage());
-        return "/error";
+        return "error";
     }
 
 }

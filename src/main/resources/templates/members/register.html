@@ -3,28 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrer</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-<h1>Registrer nyt medlem</h1>
 
-<div class="container" style="justify-content: center;">
-    <form th:action="@{/members/register}" method="post" th:object="${member}">
-        <label for="name">Navn</label>
-        <input type="text" id="name" th:field="*{name}"><br>
-        <label for="email">Email</label>
-        <input type="text" id="email" th:field="*{email}"><br>
-        <label for="password">Kodenavn</label>
-        <input type="password" id="password" th:field="*{passwordHash}"><br>
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
 
-        <button type="submit">Registrer</button>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+        </label>
 
-        <p th:if="${error != null}"
-           th:text="${error}"
-           style="color: red; margin-top: 10px;">
-        </p>
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/">Forside</a></li>
+                <li><a href="/members/login">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
+<section class="content container">
+    <h1>Registrer nyt medlem</h1>
+
+    <form th:action="@{/members/register}" method="post" th:object="${member}" class="form">
+
+        <div class="form-group">
+            <label for="name">Navn</label>
+            <input type="text" id="name" th:field="*{name}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" th:field="*{email}">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Kode</label>
+            <input type="password" id="password" th:field="*{password}">
+        </div>
+
+        <button class="btn" type="submit">Registrer</button>
+
+        <p th:if="${error != null}" th:text="${error}" style="color:red; margin-top:10px;"></p>
     </form>
-</div>
+</section>
 
 </body>
 </html>

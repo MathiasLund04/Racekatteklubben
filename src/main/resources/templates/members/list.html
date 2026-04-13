@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<head>
+    <meta charset="UTF-8">
+    <title>medlemsListe</title>
+</head>
+<body>
+<h1>Liste af aktive medlemmer i Racekatteklubben</h1>
+<p>
+  <a th:href="@{/members/home}">Tilbage til din forside</a>
+</p>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Medlem</th>
+    <th>Kæledyr</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="member : ${members}">
+    <td>
+      <div th:text="${member.name}"></div>
+      <div>Email: <span th:text="${member.email}"></span></div>
+    </td>
+    <td>
+      <a th:href="@{/cats/{owner}(owner=${member.email})}">Kæledyr</a>
+    </td>
+
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

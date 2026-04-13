@@ -25,6 +25,7 @@ public class MemberController {
         return "/members/register";
     }
 
+
     @GetMapping("/login")
     public String login(){
         return "/members/login";

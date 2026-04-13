@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Forside</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-<h1>Velkommen til Racekatteklubben</h1>
 
-<h2>User Information</h2>
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
 
-<p><strong>Name:</strong> <span th:text="${member.name}"></span></p>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+        </label>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/">Forside</a></li>
+                <li><a href="/members/login">Login</a></li>
+                <li><a href="/members/register">Bliv medlem</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Velkommen til Racekatteklubben</h1>
+    <p>Foreningen for passionerede katteentusiaster</p>
+</section>
+
+<section class="content container">
+    <h2>Dine oplysninger</h2>
+    <p><strong>Navn:</strong> <span th:text="${loggedInMember.name}"></span></p>
+</section>
+
 </body>
 </html>

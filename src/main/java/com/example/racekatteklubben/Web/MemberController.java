@@ -1,6 +1,7 @@
 package com.example.racekatteklubben.Web;
 
 import com.example.racekatteklubben.Application.MemberService;
+import com.example.racekatteklubben.Application.Validation.ValidationException;
 import com.example.racekatteklubben.Domain.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ public class MemberController {
     public MemberController(MemberService memberService){
         this.memberService = memberService;
     }
+
 
     @GetMapping("/register")
     public String register(Model model){
@@ -42,6 +44,18 @@ public class MemberController {
             return "register-member";
         }
     }
+
+    @PostMapping("/login")
+    public String loginMember(@RequestParam String email, @RequestParam String passwordHash, Model model) {
+        try {
+            memberService.login(email, passwordHash);
+            return "members/home";
+        } catch (ValidationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "members/login";
+        }
+    }
+
 
     @GetMapping("/success")
     public String success() {

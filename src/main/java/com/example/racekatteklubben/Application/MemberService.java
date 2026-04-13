@@ -19,9 +19,9 @@ public class MemberService {
         this.validation = validation;
     }
 
-    public void login(String email, String password) {
+    public void login(String email, String passwordHash) {
         //WIP
-        if (email.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || passwordHash.isEmpty()) {
             throw new ValidationException("Email og password skal udfyldes");
         }
 
@@ -31,7 +31,7 @@ public class MemberService {
             throw new  ValidationException("Bruger findes ikke");
         }
 
-        if (!BCrypt.checkpw(password, member.getPasswordHash())) {
+        if (!BCrypt.checkpw(passwordHash, member.getPasswordHash())) {
             throw new ValidationException("Forkert password");
         }
     }

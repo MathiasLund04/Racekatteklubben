@@ -8,7 +8,7 @@ PasswordHash varchar(255) not null
 );
 
 Create table cat (
-Id int primary key not null,
+Id int auto_increment primary key not null,
 Name varchar(50) not null,
 Owner Varchar(255) not null,
 Breed varchar(50) not null,

@@ -2,18 +2,19 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>Login2</title>
 </head>
 <body>
 <h1>Login</h1>
 
 <div class="container" style="justify-content: center;">
-    <form action ="/login" method="post">
+    <form th:action="@{/members/login}" method="post">
+
         <label>Email:</label>
         <input type="text" name="email"><br>
 
         <label>Kode:</label>
-        <input type="text" name="passwordHash"><br>
+        <input type="password" name="password"><br>
 
         <button type="submit">Login</button>
 
@@ -21,6 +22,10 @@
 
     </form>
 </div>
+
+<p>
+    <a th:href="@{/members/register}">Registrer</a>
+</p>
 
 </body>
 </html>

@@ -4,7 +4,7 @@ import com.example.racekatteklubben.Application.Validation.Validation;
 import com.example.racekatteklubben.Application.Validation.ValidationException;
 import com.example.racekatteklubben.Domain.IMemberRepository;
 import com.example.racekatteklubben.Domain.Member;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +19,19 @@ public class MemberService {
         this.validation = validation;
     }
 
-    public void login(String email, String passwordHash) {
+    public Member login(String email, String password) {
         //WIP
-        if (email.isEmpty() || passwordHash.isEmpty()) {
+        if (email.isBlank() || password.isBlank()) {
             throw new ValidationException("Email og password skal udfyldes");
         }
 
         Member member = mRepo.getMemberbyEmail(email);
 
-        if(member == null) {
-            throw new  ValidationException("Bruger findes ikke");
+        if(member == null || !BCrypt.checkpw(password, member.getPasswordHash()) ) {
+            throw new ValidationException("Bruger eller password forkert");
         }
 
-        if (!BCrypt.checkpw(passwordHash, member.getPasswordHash())) {
-            throw new ValidationException("Forkert password");
-        }
+        return member;
     }
 
     public void registerMember(Member member) {

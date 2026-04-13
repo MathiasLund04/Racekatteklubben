@@ -30,7 +30,7 @@ public class CatController {
             return "redirect:/cats/success";
 
         }catch(Exception e) {
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("errMessage", e.getMessage());
             return "cats/create";
         }
     }

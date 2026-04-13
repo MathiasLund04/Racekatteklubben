@@ -2,14 +2,13 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login2</title>
+    <title>login</title>
 </head>
 <body>
 <h1>Login</h1>
 
 <div class="container" style="justify-content: center;">
-    <form th:action="@{/members/login}" method="post">
-
+    <form th:action ="@{/members/login}" method="post">
         <label>Email:</label>
         <input type="text" name="email"><br>
 
@@ -18,14 +17,13 @@
 
         <button type="submit">Login</button>
 
-        <p th:if="${error}" th:text="${error}" style="color: red; margin-top: 10px;"></p>
+        <p th:if="${error != null}"
+           th:text="${error}"
+           style="color: red; margin-top: 10px;">
+        </p>
 
     </form>
 </div>
-
-<p>
-    <a th:href="@{/members/register}">Registrer</a>
-</p>
 
 </body>
 </html>

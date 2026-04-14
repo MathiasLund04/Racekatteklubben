@@ -30,11 +30,11 @@ public class CatController {
     }
 
     @PostMapping("/create")
-    public String CreateCat(@ModelAttribute("cat") Cat cat,HttpSession session , Model model) {
+    public String CreateCat(@ModelAttribute("cat") Cat cat,HttpSession session) {
         Member loggedInMember = (Member) session.getAttribute("loggedInMember");
         cat.setOwner(loggedInMember);
         catService.addCat(cat);
-        return "redirect:/cats/success";
+        return "redirect:/cats/catSuccess";
 
     }
 
@@ -45,9 +45,9 @@ public class CatController {
         return "cats/update";
     }
 
-    @GetMapping("/success")
+    @GetMapping("/catSuccess")
     public String success() {
-        return "cats/success";
+        return "cats/catSuccess";
     }
 
     @GetMapping("/{owner}")

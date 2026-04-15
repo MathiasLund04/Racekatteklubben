@@ -21,6 +21,7 @@
             <ul class="nav-list">
                 <li><a href="/members/list">Se Medlemmer</a></li>
                 <li><a href="/cats/create">Tilføj kat</a></li>
+                <li><a href="/">Log ud</a></li>
             </ul>
         </nav>
     </div>
@@ -42,7 +43,6 @@
         </div>
         <button type="submit" class="btn"> Rediger</button>
     </form>
-
 <form th:action="@{/members/delete}" method="post" class="form">
     <div class="form-group">
         <label>Fjern mit medlemskab</label>

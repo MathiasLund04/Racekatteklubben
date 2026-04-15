@@ -95,16 +95,32 @@ public class MemberController {
     @GetMapping("/update")
     public String update(HttpSession session, Model model) {
         Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+        if (loggedInMember == null) {
+            return "redirect:/members/login";
+        }
+
         model.addAttribute("loggedInMember", loggedInMember);
         return "/members/update";
     }
 
     @PostMapping("/update")
-    public String update(HttpSession session, @ModelAttribute("loggedInMember") Member member) {
+    public String update(HttpSession session, @ModelAttribute("loggedInMember") Member member, @RequestParam(required = false) String newPassword) {
         Member loggedInMember = (Member) session.getAttribute("loggedInMember");
         member.setEmail(loggedInMember.getEmail());
 
-        memberService.updateMember(member);
+        if (member.getName() == null || member.getName().trim().isEmpty()) {
+            return "redirect:/members/update?error=Navn er påkrævet";
+        }
+        boolean updPass;
+        if (newPassword != null && !newPassword.trim().isEmpty()) {
+            member.setPassword(newPassword);
+            updPass = true;
+        } else {
+            member.setPassword(loggedInMember.getPassword());
+            updPass = false;
+        }
+
+        memberService.updateMember(member, updPass);
         session.setAttribute("loggedInMember", member);
         return "redirect:/members/home";
     }

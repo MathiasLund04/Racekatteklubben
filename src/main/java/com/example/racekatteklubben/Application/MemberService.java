@@ -37,8 +37,7 @@ public class MemberService {
 
 
         // Hash password
-        String hashed = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
-        member.setPasswordHash(hashed);
+        hashPassword(member);
 
         member.setEmail(member.getEmail().trim());
         member.setPassword(member.getPassword().trim());
@@ -57,8 +56,11 @@ public class MemberService {
         return mRepo.getAllMembers();
     }
 
-    public void updateMember(Member member) throws ValidationException {
+    public void updateMember(Member member, boolean updPass) throws ValidationException {
         //WIP
+        if (updPass) {
+            hashPassword(member);
+        }
         mRepo.updateMember(member);
     }
 
@@ -71,5 +73,10 @@ public class MemberService {
     public void validateMember(Member member) throws ValidationException {
         //WIP
         validation.validateMember(member);
+    }
+
+    private void hashPassword(Member member) throws ValidationException {
+        String hashed = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
+        member.setPasswordHash(hashed);
     }
 }

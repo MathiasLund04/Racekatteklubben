@@ -15,7 +15,6 @@ public class MemberController {
     private final MemberService memberService;
     private final CatService catService;
 
-
     public MemberController(MemberService memberService, CatService catService) {
         this.memberService = memberService;
         this.catService = catService;
@@ -44,6 +43,20 @@ public class MemberController {
         return "/members/home";
     }
 
+    @PostMapping("/delete")
+    public String deleteAccount(HttpSession session) {
+        Member loggedInMember =
+                (Member) session.getAttribute("loggedInMember");
+        if (loggedInMember == null) {
+            return "redirect:/members/login";
+        }
+
+        memberService.deleteMember(loggedInMember);
+        session.invalidate();
+
+        return "redirect:/";
+    }
+
     @PostMapping("/register")
     public String registerMember(@ModelAttribute("member") Member member, Model model) {
 
@@ -52,7 +65,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String loginMember(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+    public String loginMember(@RequestParam String email, @RequestParam String password, HttpSession session) {
 
         Member loggedInMember = memberService.login(email, password);
 
@@ -62,9 +75,37 @@ public class MemberController {
 
     }
 
-
     @GetMapping("/success")
     public String success() {
         return "/members/success";
+    }
+
+    @GetMapping("/list")
+    public String list(HttpSession session, Model model) {
+        Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+        if (loggedInMember == null) {
+            return "redirect:/members/login";
+        }
+
+        model.addAttribute("loggedInMember", loggedInMember);
+        model.addAttribute("members", memberService.getMembers());
+        return "/members/list";
+    }
+
+    @GetMapping("/update")
+    public String update(HttpSession session, Model model) {
+        Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+        model.addAttribute("loggedInMember", loggedInMember);
+        return "/members/update";
+    }
+
+    @PostMapping("/update")
+    public String update(HttpSession session, @ModelAttribute("loggedInMember") Member member) {
+        Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+        member.setEmail(loggedInMember.getEmail());
+
+        memberService.updateMember(member);
+        session.setAttribute("loggedInMember", member);
+        return "redirect:/members/home";
     }
 }

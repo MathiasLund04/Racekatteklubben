@@ -1,17 +1,42 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/css/style.css}">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-<h1>Racekatteklubben</h1>
+    <title>Racekatteklubben</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+<head>
 
-<p>
-    <a th:href="@{/members/login}">Login</a> |
-    <a th:href="@{/members/register}">Registrer</a>
-</p>
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+            </label>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a th:href="@{/members/login}">Login</a>
+                <li><a th:href="@{/members/register}">Registrer</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Velkommen til Racekatteklubben</h1>
+    <p>Foreningen for passionerede racekatte‑entusiaster</p>
+</section>
+
+<section class="content container center-text">
+    <h2>Kom i gang</h2>
+    <p>
+        <a class="btn" th:href="@{/members/login}">Login</a>
+        <a class="btn" th:href="@{/members/register}">Registrer dig</a>
+    </p>
+</section>
 
 </body>
 </html>

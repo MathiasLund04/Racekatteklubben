@@ -19,9 +19,21 @@ public class JdbcMemberRepository implements IMemberRepository {
 
     @Override
     public List<Member> getAllMembers() {
-        return List.of();
+        String sql = """
+                SELECT
+                    Name,
+                    Email,
+                    PasswordHash
+                FROM member
+                """;
+            return jdbcTemp.query(sql,
+                    (rs, rowNum) -> new Member(
+                            rs.getString("Name"),
+                            rs.getString("Email"),
+                            rs.getString("PasswordHash")
+                    )
+            );
     }
-
     @Override
     public Member getMemberbyEmail(String email) {
         String sql = """

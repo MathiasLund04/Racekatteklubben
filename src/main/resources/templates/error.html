@@ -1,18 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/css/style.css}">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Error</title>
+    <title>Fejl</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-<h2>Error has occurred</h2>
 
-<p>Errormessage: <span th:text="${errMessage}"></span></p>
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
 
-<p> <a href="/">Back to index</a></p>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+        </label>
 
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/">Forside</a></li>
+                <li><a href="/members/login">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
+<section class="hero">
+    <h1>Ups! Noget gik galt</h1>
+    <p>Der opstod en fejl under behandlingen af din forespørgsel</p>
+</section>
+
+<section class="content container" style="text-align: center;">
+
+    <div style="
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    ">
+        <h2 style="color: #c0392b;">Fejlbesked</h2>
+
+        <p style="font-size: 1.1rem; margin-bottom: 20px;">
+            <span th:text="${errMessage}">Ukendt fejl</span>
+        </p>
+
+        <a class="btn" href="/">Tilbage til forsiden</a>
+    </div>
+
+</section>
 
 </body>
-</html>

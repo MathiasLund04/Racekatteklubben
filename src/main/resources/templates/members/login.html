@@ -26,24 +26,40 @@
     </div>
 </header>
 
-<section class="content container">
+<section class="hero">
     <h1>Login</h1>
+    <p>Log ind for at administrere dine racekatte og medlemsoplysninger</p>
+</section>
 
-    <form th:action="@{/members/login}" method="post" class="form">
-        <div class="form-group">
-            <label>Email</label>
-            <input type="text" name="email">
-        </div>
+<section class="content container" style="text-align: center;">
 
-        <div class="form-group">
-            <label>Kode</label>
-            <input type="password" name="password">
-        </div>
+    <div style="
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 450px;
+        margin: 0 auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        text-align: left;
+    ">
+        <form th:action="@{/members/login}" method="post" class="form">
 
-        <button class="btn" type="submit">Login</button>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="email">
+            </div>
 
-        <p th:if="${error != null}" th:text="${error}" style="color:red; margin-top:10px;"></p>
-    </form>
+            <div class="form-group">
+                <label>Kode</label>
+                <input type="password" name="password">
+            </div>
+
+            <button class="btn" type="submit">Login</button>
+
+            <p th:if="${error != null}" th:text="${error}" style="color:red; margin-top:10px;"></p>
+        </form>
+    </div>
+
 </section>
 
 </body>

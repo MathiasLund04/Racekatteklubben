@@ -27,50 +27,76 @@
     </div>
 </header>
 
-<section class="content container">
-    <h1>Opret en kat</h1>
+<section class="hero">
+    <h1>Opret en ny kat</h1>
+    <p>Tilføj en racekat til din medlemsprofil</p>
+</section>
 
-    <form th:action="@{/cats/create}" method="post" th:object="${cat}" class="form">
+<section class="content container" style="text-align: center;">
 
-        <div class="form-group">
-            <label for="name">Navn</label>
-            <input type="text" id="name" th:field="*{name}" required>
-        </div>
+    <div style="
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        text-align: left;
+    ">
+        <form th:action="@{/cats/create}" method="post" th:object="${cat}" class="form">
 
-        <div class="form-group">
-            <label for="breed">Race</label>
-            <input type="text" id="breed" th:field="*{breed}" required>
-        </div>
+            <div class="form-group">
+                <label for="name">Navn</label>
+                <input type="text" id="name" th:field="*{name}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="age">Alder</label>
-            <input type="number" id="age" th:field="*{age}" required>
-        </div>
+            <div class="form-group">
+                <label for="breed">Race</label>
+                <input type="text" id="breed" th:field="*{breed}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="father">Far</label>
-            <input type="text" id="father" th:field="*{father}">
-        </div>
+            <div class="form-group">
+                <label for="gender">Køn</label>
+                <select id="gender" th:field="*{gender}" required>
+                    <option value="">-- Vælg køn --</option>
+                    <option th:each="g : ${genders}"
+                            th:value="${g}"
+                            th:text="${g.description}">
+                    </option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="mother">Mor</label>
-            <input type="text" id="mother" th:field="*{mother}">
-        </div>
+            <div class="form-group">
+                <label for="color">Farve</label>
+                <input type="text" id="color" th:field="*{color}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="breeder">Opdrætter</label>
-            <input type="text" id="breeder" th:field="*{breeder}">
-        </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Fødselsdato</label>
+                <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="emsCode">EMS‑kode</label>
-            <input type="text" id="emsCode" th:field="*{emsCode}">
-        </div>
+            <div class="form-group">
+                <label for="father">Far</label>
+                <input type="text" id="father" th:field="*{father}">
+            </div>
 
-        <button class="btn" type="submit">Opret kat</button>
+            <div class="form-group">
+                <label for="mother">Mor</label>
+                <input type="text" id="mother" th:field="*{mother}">
+            </div>
 
-        <p th:if="${error}" th:text="${error}" style="color:red; margin-top:10px;"></p>
-    </form>
+            <div class="form-group">
+                <label for="breeder">Opdrætter</label>
+                <input type="text" id="breeder" th:field="*{breeder}">
+            </div>
+
+            <button class="btn" type="submit">Opret kat</button>
+
+            <p th:if="${error}" th:text="${error}" style="color:red; margin-top:10px;"></p>
+        </form>
+    </div>
+
 </section>
 
 </body>

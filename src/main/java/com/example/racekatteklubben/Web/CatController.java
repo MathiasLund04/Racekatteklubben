@@ -4,6 +4,7 @@ import com.example.racekatteklubben.Application.CatService;
 import com.example.racekatteklubben.Application.MemberService;
 import com.example.racekatteklubben.Domain.Cat;
 import com.example.racekatteklubben.Domain.Member;
+import com.example.racekatteklubben.Domain.Gender;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ public class CatController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("cat", new Cat());
+        model.addAttribute("genders", Gender.values());
         return "cats/create";
     }
 
@@ -42,8 +44,16 @@ public class CatController {
     public String showUpdateForm(@PathVariable int id, Model model) {
         Cat cat = catService.getCatById(id);
         model.addAttribute("cat", cat);
+        model.addAttribute("genders", Gender.values());
         return "cats/update";
     }
+
+    @PostMapping("/update")
+    public String updateCat(@ModelAttribute("cat") Cat cat) {
+        catService.updateCat(cat.getId(), cat);
+        return "redirect:/cats/catSuccess";
+    }
+
 
     @GetMapping("/catSuccess")
     public String success() {
@@ -51,7 +61,13 @@ public class CatController {
     }
 
     @GetMapping("/{owner}")
-    public String getCatsByOwner(@PathVariable String email, Model model) {
+    public String getCatsByOwner(@PathVariable("owner") String email, HttpSession session, Model model) {
+        Member loggedInMember =
+                (Member) session.getAttribute("loggedInMember");
+
+        if (loggedInMember == null) {
+            return "redirect:/members/login";
+        }
         Member owner = memberService.getMember(email);
         List<Cat> cats = catService.getCatsByOwner(owner);
         model.addAttribute("cats", cats);

@@ -24,17 +24,9 @@ public class MemberService {
         email = email.trim();
         password = password.trim();
 
-
-        if (email.isBlank() || password.isBlank()) {
-            throw new ValidationException("Email og password skal udfyldes");
-        }
-
         Member member = mRepo.getMemberbyEmail(email);
 
-        if(member == null || !BCrypt.checkpw(password, member.getPasswordHash()) ) {
-            throw new ValidationException("Bruger eller password forkert");
-        }
-
+        validation.validateLogin(member,password);
         return member;
     }
 
@@ -43,11 +35,6 @@ public class MemberService {
         // Valider input
         validation.validateMember(member);
 
-        // Tjek om email allerede findes
-        Member existing = mRepo.getMemberbyEmail(member.getEmail());
-        if (existing != null) {
-            throw new ValidationException("Email er allerede registreret");
-        }
 
         // Hash password
         String hashed = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
@@ -62,9 +49,6 @@ public class MemberService {
 
     public Member getMember(String email) throws ValidationException {
         //WIP
-        if (email.isEmpty()) {
-            throw new ValidationException("Email skal udfyldes");
-        }
         return mRepo.getMemberbyEmail(email);
     }
 
@@ -75,7 +59,6 @@ public class MemberService {
 
     public void updateMember(Member member) throws ValidationException {
         //WIP
-        validation.validateMember(member);
         mRepo.updateMember(member);
     }
 

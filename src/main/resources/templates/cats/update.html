@@ -19,7 +19,7 @@
 
         <nav class="nav">
             <ul class="nav-list">
-                <li><a href="/">Forside</a></li>
+                <li><a href="/members/home">Forside</a></li>
                 <li><a href="/members/list">Medlemmer</a></li>
                 <li><a href="/cats/list">Katte</a></li>
             </ul>
@@ -40,13 +40,38 @@
         </div>
 
         <div class="form-group">
+            <label for="owner">Ejer</label>
+            <input type="text" id="owner" th:field="*{owner.email}">
+        </div>
+
+        <div class="form-group">
             <label for="breed">Race</label>
             <input type="text" id="breed" th:field="*{breed}">
         </div>
 
         <div class="form-group">
-            <label for="age">Alder</label>
-            <input type="number" id="age" th:field="*{age}">
+            <label for="gender">Køn</label>
+            <select id="gender" th:field="*{gender}" required>
+                <option value="">-- Vælg køn --</option>
+                <option th:each="g : ${genders}"
+                        th:value="${g}"
+                        th:text="${g.description}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dateOfBirth">Fødselsdato</label>
+            <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dead">Er katten død?</label>
+            <input type="checkbox" id="dead" th:field="*{dead}" onchange="toggleDeathDate()">
+            <br>
+            <label for="dateOfDeath">Dødsdato</label>
+            <input type="date" id="dateOfDeath" th:field="*{dateOfDeath}">
+
         </div>
 
         <div class="form-group">
@@ -65,13 +90,25 @@
         </div>
 
         <div class="form-group">
-            <label for="emsCode">EMS‑kode</label>
-            <input type="text" id="emsCode" th:field="*{emsCode}">
+            <label for="color">Farve</label>
+            <input type="text" id="color" th:field="*{color}">
         </div>
 
         <button class="btn" type="submit">Gem ændringer</button>
     </form>
 </section>
+
+<script>
+    function toggleDeathDate() {
+        const checkbox = document.getElementById("isDead");
+        const dateInput = document.getElementById("dateOfDeath");
+
+        dateInput.disabled = !checkbox.checked;
+    }
+
+    window.onload = toggleDeathDate;
+</script>
+
 
 </body>
 </html>

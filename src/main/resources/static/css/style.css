@@ -25,6 +25,10 @@ body {
     z-index: 1000;
 }
 
+.center.text {
+    text-align: center;
+}
+
 .nav-container {
     display: flex;
     justify-content: space-between;

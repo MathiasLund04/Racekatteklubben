@@ -1,12 +1,15 @@
 package com.example.racekatteklubben.Infastructure;
 
 import com.example.racekatteklubben.Domain.Cat;
+import com.example.racekatteklubben.Domain.Gender;
 import com.example.racekatteklubben.Domain.ICatRepository;
 import com.example.racekatteklubben.Domain.Member;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -18,7 +21,39 @@ public class JdbcCatRepository implements ICatRepository {
         this.jdbcTemp = jdbcTemplate;
     }
 
+    private final RowMapper<Cat> catRowMapper = (rs, rowNum) -> {
 
+        Cat cat = new Cat();
+
+        cat.setId(rs.getInt("Id"));
+        cat.setName(rs.getString("Name"));
+
+        Member owner = new Member();
+
+        owner.setEmail(rs.getString("Owner"));
+        cat.setOwner(owner);
+
+        cat.setBreed(rs.getString("Breed"));
+        cat.setGender(Gender.valueOf(rs.getString("Gender")));
+        cat.setColor(rs.getString("Color"));
+
+
+        LocalDate dateOfBirth = rs.getObject("DateOfBirth", LocalDate.class);
+        LocalDate dateOfDeath = rs.getObject("DateOfDeath", LocalDate.class);
+
+        cat.setDateOfBirth(dateOfBirth);
+        cat.setDateOfDeath(dateOfDeath);
+        cat.setDead(rs.getBoolean("IsDead"));
+
+        cat.setFather(rs.getString("Father"));
+        cat.setMother(rs.getString("Mother"));
+        cat.setBreeder(rs.getString("Breeder"));
+
+        return cat;
+
+    };
+
+    @Override
     public Cat getCatById(int id) {
         String sql = """
                     SELECT 
@@ -26,8 +61,11 @@ public class JdbcCatRepository implements ICatRepository {
                         Name,
                         Owner,
                         Breed,
-                        EMSCode,
-                        Age,
+                        Gender,
+                        color,
+                        dateOfBirth,
+                        isDead,
+                        dateOfDeath,
                         Father,
                         Mother,
                         Breeder
@@ -35,29 +73,13 @@ public class JdbcCatRepository implements ICatRepository {
                     WHERE  id = ?
                     """;
         try {
-            return jdbcTemp.queryForObject(sql, (rs, rowNum) -> {
-                Cat cat = new Cat();
-                cat.setId(rs.getInt("id"));
-                cat.setName(rs.getString("Name"));
-
-                Member m = new Member();
-                m.setEmail(rs.getString("Owner"));
-                cat.setOwner(m);
-
-                cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("EMScode"));
-                cat.setAge(rs.getInt("Age"));
-                cat.setFather(rs.getString("Father"));
-                cat.setMother(rs.getString("Mother"));
-                cat.setBreeder(rs.getString("Breeder"));
-                return cat;
-            }, id);
+            return jdbcTemp.queryForObject(sql,catRowMapper, id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
     public List<Cat> getCats(){return List.of();}
-
+    @Override
     public List<Cat> getCatsByOwner(Member owner){
         String sql = """
                     SELECT 
@@ -65,8 +87,11 @@ public class JdbcCatRepository implements ICatRepository {
                         Name,
                         Owner,
                         Breed,
-                        EMSCode,
-                        Age,
+                        Gender,
+                        Color,
+                        DateOfBirth,
+                        IsDead,
+                        DateOfDeath,
                         Father,
                         Mother,
                         Breeder
@@ -74,23 +99,12 @@ public class JdbcCatRepository implements ICatRepository {
                     WHERE  Owner = ?
                     """;
         try {
-            return jdbcTemp.query(sql, (rs, rowNum) -> {
-                Cat cat = new Cat();
-                cat.setId(rs.getInt("id"));
-                cat.setName(rs.getString("Name"));
-                cat.setOwner(owner);
-                cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("EMSCode"));
-                cat.setAge(rs.getInt("Age"));
-                cat.setFather(rs.getString("Father"));
-                cat.setMother(rs.getString("Mother"));
-                cat.setBreeder(rs.getString("Breeder"));
-                return cat;
-            }, owner.getEmail());
+            return jdbcTemp.query(sql, catRowMapper, owner.getEmail());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+    @Override
     public List<Cat> getCatsByBreed(String breed){
         String sql = """
                     SELECT 
@@ -98,8 +112,11 @@ public class JdbcCatRepository implements ICatRepository {
                         Name,
                         Owner,
                         Breed,
-                        EMSCode,
-                        Age,
+                        Gender,
+                        Color,
+                        DateOfBirth,
+                        IsDead,
+                        DateOfDeath,
                         Father,
                         Mother,
                         Breeder
@@ -107,29 +124,12 @@ public class JdbcCatRepository implements ICatRepository {
                     WHERE  Breed = ?
                     """;
         try {
-            return jdbcTemp.query(sql, (rs, rowNum) -> {
-                Cat cat = new Cat();
-                cat.setId(rs.getInt("id"));
-                cat.setName(rs.getString("Name"));
-
-                //Da Owner er en foreign key som referer til en members email og et cat objekt indeholder en member, så skal man lige oprette en member ud fra den hentede owner i DB
-                Member m = new Member();
-                m.setEmail(rs.getString("Owner"));
-                cat.setOwner(m);
-
-                cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("EMSCode"));
-                cat.setAge(rs.getInt("Age"));
-                cat.setFather(rs.getString("Father"));
-                cat.setMother(rs.getString("Mother"));
-                cat.setBreeder(rs.getString("Breeder"));
-                return cat;
-            }, breed);
+            return jdbcTemp.query(sql, catRowMapper, breed);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
-
+    @Override
     public List<Cat> getCatsByMother(String mother){
         String sql = """
                     SELECT 
@@ -137,8 +137,11 @@ public class JdbcCatRepository implements ICatRepository {
                         Name,
                         Owner,
                         Breed,
-                        EMSCode,
-                        Age,
+                        Gender,
+                        Color,
+                        DateOfBirth,
+                        IsDead,
+                        DateOfDeath,
                         Father,
                         Mother,
                         Breeder
@@ -146,27 +149,12 @@ public class JdbcCatRepository implements ICatRepository {
                     WHERE  Mother = ?
                     """;
         try {
-            return jdbcTemp.query(sql, (rs, rowNum) -> {
-                Cat cat = new Cat();
-                cat.setId(rs.getInt("id"));
-                cat.setName(rs.getString("Name"));
-
-                Member m = new Member();
-                m.setEmail(rs.getString("Owner"));
-                cat.setOwner(m);
-
-                cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("EMSCode"));
-                cat.setAge(rs.getInt("Age"));
-                cat.setFather(rs.getString("Father"));
-                cat.setMother(rs.getString("Mother"));
-                cat.setBreeder(rs.getString("Breeder"));
-                return cat;
-            }, mother);
+            return jdbcTemp.query(sql, catRowMapper, mother);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+    @Override
     public List<Cat> getCatsByFather(String father){
         String sql = """
                     SELECT 
@@ -174,8 +162,11 @@ public class JdbcCatRepository implements ICatRepository {
                         Name,
                         Owner,
                         Breed,
-                        EMSCode,
-                        Age,
+                        Gender,
+                        Color,
+                        DateOfBirth,
+                        IsDead,
+                        DateOfDeath,
                         Father,
                         Mother,
                         Breeder
@@ -183,23 +174,7 @@ public class JdbcCatRepository implements ICatRepository {
                     WHERE  Father = ?
                     """;
         try {
-            return jdbcTemp.query(sql, (rs, rowNum) -> {
-                Cat cat = new Cat();
-                cat.setId(rs.getInt("id"));
-                cat.setName(rs.getString("Name"));
-
-                Member m = new Member();
-                m.setEmail(rs.getString("Owner"));
-                cat.setOwner(m);
-
-                cat.setBreed(rs.getString("Breed"));
-                cat.setEmsCode(rs.getString("EMSCode"));
-                cat.setAge(rs.getInt("Age"));
-                cat.setFather(rs.getString("Father"));
-                cat.setMother(rs.getString("Mother"));
-                cat.setBreeder(rs.getString("Breeder"));
-                return cat;
-            }, father);
+            return jdbcTemp.query(sql, catRowMapper, father);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -207,15 +182,18 @@ public class JdbcCatRepository implements ICatRepository {
     public void addCat(Cat cat){
         String sql = """
                     INSERT INTO cat
-                    (Name, Owner, Breed, EMSCode, Age, Father, Mother, Breeder)
-                    values (?, ?, ?, ?, ?, ?, ?, ?)
+                    (Name, Owner, Breed, Gender, Color, DateOFBirth, IsDead, DateOfDeath, Father, Mother, Breeder)
+                    values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """;
         jdbcTemp.update(sql,
                 cat.getName(),
                 cat.getOwner() != null ? cat.getOwner().getEmail() : null,
                 cat.getBreed(),
-                cat.getEmsCode(),
-                cat.getAge(),
+                cat.getGender().name(),
+                cat.getColor(),
+                cat.getDateOfBirth(),
+                cat.isDead(),
+                cat.getDateOfDeath(),
                 cat.getFather(),
                 cat.getMother(),
                 cat.getBreeder()
@@ -228,8 +206,11 @@ public class JdbcCatRepository implements ICatRepository {
                     Name = ?,
                     Owner = ?,
                     Breed = ?,
-                    EMSCode = ?,
-                    Age = ?,
+                    Gender = ?,
+                    Color = ?,
+                    DateOFBirth = ?,
+                    IsDead = ?,
+                    DateOfDeath = ?,
                     Father = ?,
                     Mother = ?,
                     Breeder = ?
@@ -240,8 +221,11 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.getName(),
                 cat.getOwner().getEmail(),
                 cat.getBreed(),
-                cat.getEmsCode(),
-                cat.getAge(),
+                cat.getGender().name(),
+                cat.getColor(),
+                cat.getDateOfBirth(),
+                cat.isDead(),
+                cat.getDateOfDeath(),
                 cat.getFather(),
                 cat.getMother(),
                 cat.getBreeder(),

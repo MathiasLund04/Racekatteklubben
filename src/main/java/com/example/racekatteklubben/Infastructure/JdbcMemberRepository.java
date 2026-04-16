@@ -44,7 +44,6 @@ public class JdbcMemberRepository implements IMemberRepository {
                 FROM member
                 WHERE Email = ?
                 """;
-
         try{
             return jdbcTemp.queryForObject(sql,
                     (rs, rowNum) -> new Member(
@@ -58,7 +57,6 @@ public class JdbcMemberRepository implements IMemberRepository {
             return null;
         }
     }
-
     @Override
     public void addMember(Member member) {
         String sql = """
@@ -73,7 +71,6 @@ public class JdbcMemberRepository implements IMemberRepository {
                 member.getPasswordHash()
         );
     }
-
     @Override
     public void updateMember(Member member) {
         String sql = """
@@ -85,7 +82,6 @@ public class JdbcMemberRepository implements IMemberRepository {
                 """;
         jdbcTemp.update(sql, member.getName(), member.getPasswordHash(), member.getEmail());
     }
-
     @Override
     public void deleteMember(Member member) {
         String sql = """

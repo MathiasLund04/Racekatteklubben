@@ -19,49 +19,41 @@ public class CatService {
     }
 
     public void addCat(Cat cat){
-        //WIP
         validation.validateCat(cat);
         cRepo.addCat(cat);
     }
 
     public void updateCat(int id, Cat cat){
-        //WIP
         validation.validateCat(cat);
         cRepo.updateCat(id, cat);
 
     }
 
     public void removeCat(int id){
-        //WIP
         validation.validateInt(id);
         cRepo.removeCat(id);
     }
 
     public Cat getCatById(int id){
-        //WIP
         validation.validateInt(id);
         return cRepo.getCatById(id);
     }
 
     public List<Cat> getCatsByOwner(Member owner){
-        //WIP
         return cRepo.getCatsByOwner(owner);
     }
 
     public List<Cat> getCatsByBreed(String breed){
-        //WIP
         validation.validateString(breed);
         return cRepo.getCatsByBreed(breed);
     }
 
     public List<Cat> getCatsByFather(String father){
-        //WIP
         validation.validateString(father);
         return cRepo.getCatsByFather(father);
     }
 
     public List<Cat> getCatsByMother(String mother){
-        //WIP
         validation.validateString(mother);
         return cRepo.getCatsByMother(mother);
     }

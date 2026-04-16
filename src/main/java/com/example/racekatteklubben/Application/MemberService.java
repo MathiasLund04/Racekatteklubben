@@ -20,7 +20,6 @@ public class MemberService {
     }
 
     public Member login(String email, String password) throws ValidationException {
-        //WIP
         email = email.trim();
         password = password.trim();
 
@@ -31,10 +30,8 @@ public class MemberService {
     }
 
     public void registerMember(Member member) throws ValidationException {
-        //WIP
         // Valider input
         validation.validateNewMember(member);
-
 
         // Hash password
         hashPassword(member);
@@ -47,17 +44,14 @@ public class MemberService {
     }
 
     public Member getMemberByEmail(String email) throws ValidationException {
-        //WIP
         return mRepo.getMemberbyEmail(email);
     }
 
     public List<Member> getMembers() {
-        //WIP
         return mRepo.getAllMembers();
     }
 
     public void updateMember(Member member, boolean updPass) throws ValidationException {
-        //WIP
         if (updPass) {
             hashPassword(member);
         }
@@ -65,13 +59,11 @@ public class MemberService {
     }
 
     public void deleteMember(Member member) throws ValidationException {
-        //WIP
         validation.validateString(member.getEmail());
         mRepo.deleteMember(member);
     }
 
     public void validateMember(Member member) throws ValidationException {
-        //WIP
         validation.validateMember(member);
     }
 

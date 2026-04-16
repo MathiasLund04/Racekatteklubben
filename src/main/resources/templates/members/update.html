@@ -5,7 +5,9 @@
     <title>Rediger bruger</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
+
 <header class="header">
     <div class="container nav-container">
         <a href="/" class="logo">Racekatteklubben</a>
@@ -25,19 +27,28 @@
     </div>
 </header>
 
-<section class="content container">
+<!-- HERO som matcher resten -->
+<section class="hero">
     <h1>Rediger din bruger</h1>
+    <p>Opdater dine oplysninger her</p>
+</section>
+
+<section class="content container">
+
+    <p><a class="btn" th:href="@{/members/home}">Tilbage til din forside</a></p>
+
+    <h2>Brugeroplysninger</h2>
 
     <form th:action="@{/members/update}" method="post" th:object="${loggedInMember}" class="form">
 
         <div class="form-group">
             <label for="name">Navn</label>
-            <input type="text" id="name" th:field="*{name}">
+            <input type="text" id="name" th:field="*{name}" required>
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" id="email" th:field="*{email}">
+            <input type="text" id="email" th:field="*{email}" required>
         </div>
 
         <div class="form-group">
@@ -51,29 +62,26 @@
 
             <div class="form-group">
                 <label for="currentPassword">Nuværende password</label>
-                <div style="display:flex; align-items:center;">
+                <div style="display:flex; align-items:center; gap:10px;">
                     <input type="password" id="currentPassword" th:field="*{password}">
-                    <button type="button" onclick="togglePasswordVisibility('currentPassword')">
-                        👁
-                    </button>
+                    <button type="button" onclick="togglePasswordVisibility('currentPassword')">👁</button>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="newPassword">Nyt password</label>
-                <input type="password" id="newPassword" name="newPassword" value="">
-                <button type="button" onclick="togglePasswordVisibility('newPassword')">
-                    👁
-                </button>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <input type="password" id="newPassword" name="newPassword">
+                    <button type="button" onclick="togglePasswordVisibility('newPassword')">👁</button>
+                </div>
             </div>
 
         </div>
 
-        <button class="btn" type="submit">Rediger</button>
+        <button class="btn" type="submit">Gem ændringer</button>
 
         <p th:if="${error != null}" th:text="${error}" style="color:red; margin-top:10px;"></p>
     </form>
-
 
 </section>
 
@@ -81,23 +89,16 @@
     function togglePasswordFields() {
         const checkbox = document.getElementById("changePassword");
         const fields = document.getElementById("passwordFields");
-
         fields.style.display = checkbox.checked ? "block" : "none";
     }
 
     function togglePasswordVisibility(id) {
         const input = document.getElementById(id);
-
-        if (input.type === "password") {
-            input.type = "text";
-        } else {
-            input.type = "password";
-        }
+        input.type = input.type === "password" ? "text" : "password";
     }
 
     window.onload = togglePasswordFields;
 </script>
-
 
 </body>
 </html>

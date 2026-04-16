@@ -32,16 +32,26 @@
 </section>
 
 <section class="content container">
-    <h2>Kattens oplysninger</h2>
-    <p><strong>Navn:</strong> <span th:text="${cat.name}"></span></p>
-    <p><strong>Race:</strong> <span th:text="${cat.breed}"></span></p>
-    <p><strong>Køn:</strong> <span th:text="${cat.gender.description}"></span></p>
-    <p><strong>Farve:</strong> <span th:text="${cat.color}"></span></p>
-    <p><strong>Fødselsdag:</strong> <span th:text="${cat.dateOfBirth}"></span></p>
-    <p><strong>Status:</strong> <span th:text="${cat.status}"></span></p>
-    <p><strong>Far:</strong> <span th:text="${cat.father}"></span></p>
-    <p><strong>Mor:</strong> <span th:text="${cat.mother}"></span></p>
-    <p><strong>Opdrætter:</strong> <span th:text="${cat.breeder}"></span></p>
+    <div class="cat-container">
+
+        <div class="cat-info">
+            <h2>Kattens oplysninger</h2>
+            <p><strong>Navn:</strong> <span th:text="${cat.name}"></span></p>
+            <p><strong>Race:</strong> <span th:text="${cat.breed}"></span></p>
+            <p><strong>Køn:</strong> <span th:text="${cat.gender.description}"></span></p>
+            <p><strong>Farve:</strong> <span th:text="${cat.color}"></span></p>
+            <p><strong>Fødselsdag:</strong> <span th:text="${cat.dateOfBirth}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${cat.status}"></span></p>
+            <p><strong>Far:</strong> <span th:text="${cat.father}"></span></p>
+            <p><strong>Mor:</strong> <span th:text="${cat.mother}"></span></p>
+            <p><strong>Opdrætter:</strong> <span th:text="${cat.breeder}"></span></p>
+        </div>
+
+        <div class="cat-image">
+            <img th:src="@{'/images/' + ${cat.image}}" alt="Billede af kat">
+        </div>
+
+    </div>
 
 </section>
 

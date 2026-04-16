@@ -27,26 +27,35 @@
     </div>
 </header>
 
-<section class="content container">
+<!-- HERO som matcher resten -->
+<section class="hero">
     <h1>Rediger kat</h1>
+    <p>Opdater oplysningerne for katten her</p>
+</section>
 
-    <form th:action="@{/cats/update}" method="post" th:object="${cat}" class="form">
+<section class="content container">
+
+    <p><a class="btn" th:href="@{/cats/list}">Tilbage til katteoversigt</a></p>
+
+    <h2>Rediger oplysninger</h2>
+
+    <form th:action="@{/cats/update}" method="post" th:object="${cat}" enctype="multipart/form-data" class="form">
 
         <input type="hidden" th:field="*{id}">
 
         <div class="form-group">
             <label for="name">Navn</label>
-            <input type="text" id="name" th:field="*{name}">
+            <input type="text" id="name" th:field="*{name}" required>
         </div>
 
         <div class="form-group">
             <label for="owner">Ejer</label>
-            <input type="text" id="owner" th:field="*{owner.email}">
+            <input type="text" id="owner" th:field="*{owner.email}" required>
         </div>
 
         <div class="form-group">
             <label for="breed">Race</label>
-            <input type="text" id="breed" th:field="*{breed}">
+            <input type="text" id="breed" th:field="*{breed}" required>
         </div>
 
         <div class="form-group">
@@ -68,10 +77,9 @@
         <div class="form-group">
             <label for="dead">Er katten død?</label>
             <input type="checkbox" id="dead" th:field="*{dead}" onchange="toggleDeathDate()">
-            <br>
+
             <label for="dateOfDeath">Dødsdato</label>
             <input type="date" id="dateOfDeath" th:field="*{dateOfDeath}">
-
         </div>
 
         <div class="form-group">
@@ -94,21 +102,24 @@
             <input type="text" id="color" th:field="*{color}">
         </div>
 
+        <div class="form-group">
+            <label for="imageFile">Nyt billede</label>
+            <input type="file" id="imageFile" name="imageFile">
+        </div>
+
         <button class="btn" type="submit">Gem ændringer</button>
     </form>
 </section>
 
 <script>
     function toggleDeathDate() {
-        const checkbox = document.getElementById("isDead");
+        const checkbox = document.getElementById("dead");
         const dateInput = document.getElementById("dateOfDeath");
-
         dateInput.disabled = !checkbox.checked;
     }
 
     window.onload = toggleDeathDate;
 </script>
-
 
 </body>
 </html>

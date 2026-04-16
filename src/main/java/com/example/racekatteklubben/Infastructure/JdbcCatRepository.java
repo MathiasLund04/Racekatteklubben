@@ -48,6 +48,7 @@ public class JdbcCatRepository implements ICatRepository {
         cat.setFather(rs.getString("Father"));
         cat.setMother(rs.getString("Mother"));
         cat.setBreeder(rs.getString("Breeder"));
+        cat.setImage(rs.getString("Image"));
 
         return cat;
 
@@ -68,7 +69,8 @@ public class JdbcCatRepository implements ICatRepository {
                         dateOfDeath,
                         Father,
                         Mother,
-                        Breeder
+                        Breeder,
+                        Image
                     FROM cat
                     WHERE  id = ?
                     """;
@@ -93,7 +95,8 @@ public class JdbcCatRepository implements ICatRepository {
                         DateOfDeath,
                         Father,
                         Mother,
-                        Breeder
+                        Breeder,
+                        Image
                     FROM cat
                     WHERE  Owner = ?
                     """;
@@ -118,7 +121,8 @@ public class JdbcCatRepository implements ICatRepository {
                         DateOfDeath,
                         Father,
                         Mother,
-                        Breeder
+                        Breeder,
+                        Image
                     FROM cat
                     WHERE  Breed = ?
                     """;
@@ -143,7 +147,8 @@ public class JdbcCatRepository implements ICatRepository {
                         DateOfDeath,
                         Father,
                         Mother,
-                        Breeder
+                        Breeder,
+                        Image
                     FROM cat
                     WHERE  Mother = ?
                     """;
@@ -168,7 +173,8 @@ public class JdbcCatRepository implements ICatRepository {
                         DateOfDeath,
                         Father,
                         Mother,
-                        Breeder
+                        Breeder,
+                        Image
                     FROM cat
                     WHERE  Father = ?
                     """;
@@ -181,8 +187,8 @@ public class JdbcCatRepository implements ICatRepository {
     public void addCat(Cat cat){
         String sql = """
                     INSERT INTO cat
-                    (Name, Owner, Breed, Gender, Color, DateOFBirth, IsDead, DateOfDeath, Father, Mother, Breeder)
-                    values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    (Name, Owner, Breed, Gender, Color, DateOFBirth, IsDead, DateOfDeath, Father, Mother, Breeder, Image)
+                    values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """;
         jdbcTemp.update(sql,
                 cat.getName(),
@@ -195,7 +201,8 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.getDateOfDeath(),
                 cat.getFather(),
                 cat.getMother(),
-                cat.getBreeder()
+                cat.getBreeder(),
+                cat.getImage()
                 );
     }
     public void updateCat(int id, Cat cat){
@@ -212,7 +219,8 @@ public class JdbcCatRepository implements ICatRepository {
                     DateOfDeath = ?,
                     Father = ?,
                     Mother = ?,
-                    Breeder = ?
+                    Breeder = ?,
+                    Image = ?
                 WHERE id = ?
                 """;
 
@@ -228,6 +236,7 @@ public class JdbcCatRepository implements ICatRepository {
                 cat.getFather(),
                 cat.getMother(),
                 cat.getBreeder(),
+                cat.getImage(),
                 id
         );
     }

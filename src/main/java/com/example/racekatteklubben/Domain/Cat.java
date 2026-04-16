@@ -24,6 +24,7 @@ public class Cat {
     private String breeder;
     private Member owner;
     private String color;
+    private String image;
 
     public Cat(){}
 
@@ -129,6 +130,13 @@ public class Cat {
     }
     public void setDateOfDeath(LocalDate dateOfDeath) {
         this.dateOfDeath = dateOfDeath;
+    }
+
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String status(){

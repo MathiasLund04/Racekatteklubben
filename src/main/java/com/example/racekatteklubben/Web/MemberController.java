@@ -43,6 +43,18 @@ public class MemberController {
         return "/members/home";
     }
 
+    @GetMapping("/deleteConfirmation")
+    public String showDeleteConfirmation(HttpSession session, Model model) {
+        Member loggedInMember = (Member) session.getAttribute("loggedInMember");
+
+        if (loggedInMember == null) {
+            return "redirect:/members/login";
+        }
+
+        model.addAttribute("loggedInMember", loggedInMember);
+        return "members/deleteConfirmation";
+    }
+
     @PostMapping("/delete")
     public String deleteAccount(HttpSession session) {
         Member loggedInMember =
@@ -58,7 +70,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String registerMember(@ModelAttribute("member") Member member, Model model) {
+    public String registerMember(@ModelAttribute("member") Member member) {
 
         memberService.registerMember(member);
         return "redirect:/members/success";

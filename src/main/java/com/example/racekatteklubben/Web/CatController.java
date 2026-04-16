@@ -9,7 +9,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -32,12 +36,33 @@ public class CatController {
     }
 
     @PostMapping("/create")
-    public String CreateCat(@ModelAttribute("cat") Cat cat,HttpSession session) {
+    public String createCat(@ModelAttribute("cat") Cat cat,
+                            @RequestParam(value = "imageFile", required = false) MultipartFile file,
+                            HttpSession session) throws Exception {
+
         Member loggedInMember = (Member) session.getAttribute("loggedInMember");
         cat.setOwner(loggedInMember);
+
+        if (file != null && !file.isEmpty()) {
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            String fileName = file.getOriginalFilename();
+            Path filePath = uploadPath.resolve(fileName);
+
+            Files.write(filePath, file.getBytes());
+
+            cat.setImage(fileName);
+
+            System.out.println("Gemmer billede i: " + filePath);
+        }
+
         catService.addCat(cat);
         return "redirect:/cats/catSuccess";
-
     }
 
     @GetMapping("/catProfile/{id}")
@@ -56,7 +81,32 @@ public class CatController {
     }
 
     @PostMapping("/update")
-    public String updateCat(@ModelAttribute("cat") Cat cat) {
+    public String updateCat(@ModelAttribute("cat") Cat cat,
+                            @RequestParam(value = "imageFile", required = false) MultipartFile file) throws Exception {
+        Cat existingCat = catService.getCatById(cat.getId());
+
+        if (file != null && !file.isEmpty()) {
+
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            String fileName = file.getOriginalFilename();
+            Path filePath = uploadPath.resolve(fileName);
+
+            Files.write(filePath, file.getBytes());
+
+            cat.setImage(fileName);
+
+        } else {
+            // behold gammelt billede
+            cat.setImage(existingCat.getImage());
+        }
+
+
         catService.updateCat(cat.getId(), cat);
         return "redirect:/cats/catSuccess";
     }

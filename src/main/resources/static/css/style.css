@@ -1,3 +1,4 @@
+/* Base styling */
 {
     margin: 0;
     padding: 0;
@@ -17,6 +18,7 @@ body {
     margin: 0 auto;
 }
 
+/* Header & Navigation */
 .header {
     background-color: #1f2937;
     color: white;
@@ -25,9 +27,6 @@ body {
     z-index: 1000;
 }
 
-.center.text {
-    text-align: center;
-}
 
 .nav-container {
     display: flex;
@@ -79,6 +78,7 @@ body {
     display: block;
 }
 
+/* Hero Sektioner */
 .hero {
     background: linear-gradient(135deg, #73c885, #8a65c8);
     color: white;
@@ -96,6 +96,7 @@ body {
     margin: 0 auto 1.5rem auto;
 }
 
+/* Knapper */
 .btn {
     display: inline-block;
     background-color: white;
@@ -106,14 +107,132 @@ body {
     font-weight: bold;
 }
 
+
+.btn.small {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: background 0.2s ease;
+}
+
+.btn.small:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* Content Sektioner */
 .content {
-    padding: 50px 0;
+    padding: 50px 30px;
     background-color: white;
 }
 
 .content h2 {
     margin-bottom: 1rem;
 }
+
+/* Katte - Card-container */
+.cat-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.cat-card {
+    background: linear-gradient(135deg, #73c885, #8a65c8);
+    padding: 25px 30px;
+    border-radius: 18px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    height: 100%;
+}
+
+.cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+.cat-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+}
+
+.cat-card p {
+    margin: 6px 0;
+}
+
+.cat-card-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Medlemmer - Card-container */
+.member-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.member-card {
+    background: linear-gradient(135deg, #73c885, #8a65c8);
+    padding: 25px 30px;
+    border-radius: 18px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-bottom: 20px;
+}
+
+.member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+.member-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+}
+
+.member-card p {
+    margin: 6px 0;
+}
+
+.member-card-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.cat-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.cat-info {
+    flex: 1;
+}
+
+.cat-image {
+    flex: 1;
+    text-align: right;
+}
+
+.cat-image img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
 
 /* Mobil */
 @media (max-width: 768px) {
@@ -151,4 +270,14 @@ body {
     .hero h1 {
         font-size: 1.8rem;
     }
+
+    .cat-container {
+        flex-direction: column;
+    }
+
+    .cat-image {
+        text-align: center;
+        margin-top: 20px;
+    }
+
 }

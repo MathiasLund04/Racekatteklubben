@@ -27,40 +27,38 @@
     </div>
 </header>
 
-<section class="content container">
+<section class="hero">
     <h1>Katte ejet af <span th:text="${member.name}"></span></h1>
+    <p>Her kan du se alle katte registreret på medlemmet</p>
+</section>
+
+<section class="content container">
 
     <p><a class="btn" th:href="@{/members/list}">Tilbage til medlemsliste</a></p>
 
-    <table class="table" border="1">
-        <thead>
-        <tr>
-            <th>Navn</th>
-            <th>Race</th>
-            <th>Køn</th>
-            <th>Farve</th>
-            <th>Fødselsdato</th>
-            <th>Status</th>
-            <th>Far</th>
-            <th>Mor</th>
-            <th>Opdrætter</th>
-        </tr>
-        </thead>
+    <h2>Katteliste</h2>
 
-        <tbody>
-        <tr th:each="cat : ${cats}">
-            <td th:text="${cat.name}"></td>
-            <td th:text="${cat.breed}"></td>
-            <td th:text="${cat.gender.description}"></td>
-            <td th:text="${cat.color}"></td>
-            <td th:text="${cat.dateOfBirth}"></td>
-            <td th:text="${cat.status}"></td>
-            <td th:text="${cat.father}"></td>
-            <td th:text="${cat.mother}"></td>
-            <td th:text="${cat.breeder}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="cat-card-container">
+        <div class="cat-card" th:each="cat : ${cats}">
+            <h3 th:text="${cat.name}"></h3>
+
+            <p><strong>Race:</strong> <span th:text="${cat.breed}"></span></p>
+            <p><strong>Køn:</strong> <span th:text="${cat.gender.description}"></span></p>
+            <p><strong>Farve:</strong> <span th:text="${cat.color}"></span></p>
+            <p><strong>Fødselsdato:</strong> <span th:text="${cat.dateOfBirth}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${cat.status}"></span></p>
+            <p><strong>Far:</strong> <span th:text="${cat.father}"></span></p>
+            <p><strong>Mor:</strong> <span th:text="${cat.mother}"></span></p>
+            <p><strong>Opdrætter:</strong> <span th:text="${cat.breeder}"></span></p>
+
+            <div class="cat-card-actions">
+                <a th:href="@{/cats/catProfile/{id}(id=${cat.id})}" class="btn small">Se</a>
+                <a th:href="@{/cats/update/{id}(id=${cat.id})}" class="btn small">Rediger</a>
+                <a th:href="@{/cats/deleteConfirmation/{id}(id=${cat.id})}" class="btn small">Slet</a>
+            </div>
+        </div>
+    </div>
+
 </section>
 
 </body>

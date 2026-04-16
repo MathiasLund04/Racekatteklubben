@@ -25,7 +25,7 @@ public class Validation {
         if (cat.getBreed() == null || cat.getBreed().isEmpty()) {
             throw new ValidationException("Katterace skal angives");
         }
-        if (cat.getOwner().getEmail().isEmpty()) {
+        if (cat.getOwner() == null || cat.getOwner().getEmail() == null || cat.getOwner().getEmail().isEmpty()) {
             throw new ValidationException("Ejer skal angives");
         }
         if (cat.getColor().isEmpty()) {
@@ -35,27 +35,30 @@ public class Validation {
 
     public void validateMember(Member member) throws ValidationException {
         //WIP
-        Member existing = mRepo.getMemberbyEmail(member.getEmail());
-        if (existing != null && !existing.getEmail().equals(member.getEmail())) {
-            throw new ValidationException("Email er allerede registreret");
-        }
         if (member.getName() == null || member.getName().isEmpty()) {
             throw new ValidationException("Medlem skal have navn");
         }
+
         if (member.getEmail() == null || member.getEmail().isEmpty()) {
-            throw new ValidationException("Medlem skal have email");
+            throw new ValidationException("Email skal udfyldes");
         }
-        if (!member.getEmail().contains("@")){
+
+        if (!member.getEmail().contains("@")) {
             throw new ValidationException("Email skal indeholde '@'");
         }
+
         if (member.getPassword() == null || member.getPassword().isEmpty()) {
-            throw new ValidationException("Medlem skal have kodeord");
+            throw new ValidationException("Password skal udfyldes");
         }
-        if (member.getEmail().isEmpty() || member.getPassword() == null) {
-            throw new ValidationException("Email og password skal udfyldes");
-        }
-        if (member.getEmail() == null) {
-            throw new ValidationException("Email skal udfyldes");
+
+    }
+
+    public void validateNewMember(Member member){
+        validateMember(member);
+
+        Member existing = mRepo.getMemberbyEmail(member.getEmail());
+        if (existing != null) {
+            throw new ValidationException("Email er allerede registreret");
         }
 
     }
@@ -67,7 +70,7 @@ public class Validation {
     }
 
     public void validateString(String word) throws ValidationException {
-        if (word.isEmpty()){
+        if (word == null || word.isEmpty()){
             throw new ValidationException("Venligst udfyld dette");
         }
     }

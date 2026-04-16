@@ -40,6 +40,13 @@ public class CatController {
 
     }
 
+    @GetMapping("/catProfile/{id}")
+    public String catProfile(@PathVariable int id, Model model) {
+        Cat cat = catService.getCatById(id);
+        model.addAttribute("cat", cat);
+        return "/cats/catProfile";
+    }
+
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable int id, Model model) {
         Cat cat = catService.getCatById(id);
@@ -68,7 +75,7 @@ public class CatController {
         if (loggedInMember == null) {
             return "redirect:/members/login";
         }
-        Member owner = memberService.getMember(email);
+        Member owner = memberService.getMemberByEmail(email);
         List<Cat> cats = catService.getCatsByOwner(owner);
         model.addAttribute("cats", cats);
         model.addAttribute("member", owner);
@@ -85,4 +92,20 @@ public class CatController {
 
         return "cats/catOwner";
     }
+
+    @GetMapping("/deleteConfirmation/{id}")
+    public String deleteCat(@PathVariable int id, Model model) {
+    Cat cat = catService.getCatById(id);
+    model.addAttribute("cat", cat);
+    return "cats/deleteConfirmation";
+    }
+
+    @PostMapping("/deleteConfirmation/{id}")
+    public String deleteCat(@PathVariable int id) {
+        catService.removeCat(id);
+        return "redirect:/members/home";
+
+    }
+
+
 }

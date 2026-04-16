@@ -86,8 +86,14 @@
             <td th:text="${cat.mother}"></td>
             <td th:text="${cat.breeder}"></td>
             <td>
+                <a th:href="@{/cats/catProfile/{id}(id=${cat.id})}" class="btn">
+                    Se
+                </a>
                 <a th:href="@{/cats/update/{id}(id=${cat.id})}" class="btn">
-                    Rediger kat
+                    Rediger
+                </a>
+                <a th:href="@{/cats/deleteConfirmation/{id}(id=${cat.id})}" class="btn">
+                    Slet
                 </a>
             </td>
         </tr>

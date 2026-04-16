@@ -78,7 +78,6 @@ public class JdbcCatRepository implements ICatRepository {
             return null;
         }
     }
-    public List<Cat> getCats(){return List.of();}
     @Override
     public List<Cat> getCatsByOwner(Member owner){
         String sql = """

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Katte Profil</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
+
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+        </label>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/members/list">Se Medlemmer</a></li>
+                <li><a href="/members/home">Tilbage til forside</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Velkommen til Racekatteklubben</h1>
+    <p>Foreningen for passionerede katteentusiaster</p>
+</section>
+
+<section class="content container">
+    <h2>Kattens oplysninger</h2>
+    <p><strong>Navn:</strong> <span th:text="${cat.name}"></span></p>
+    <p><strong>Race:</strong> <span th:text="${cat.breed}"></span></p>
+    <p><strong>Køn:</strong> <span th:text="${cat.gender.description}"></span></p>
+    <p><strong>Farve:</strong> <span th:text="${cat.color}"></span></p>
+    <p><strong>Fødselsdag:</strong> <span th:text="${cat.dateOfBirth}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${cat.status}"></span></p>
+    <p><strong>Far:</strong> <span th:text="${cat.father}"></span></p>
+    <p><strong>Mor:</strong> <span th:text="${cat.mother}"></span></p>
+    <p><strong>Opdrætter:</strong> <span th:text="${cat.breeder}"></span></p>
+
+</section>
+
+</body>
+</html>

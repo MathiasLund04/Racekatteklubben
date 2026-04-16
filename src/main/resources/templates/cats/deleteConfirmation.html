@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rediger kat</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="/" class="logo">Racekatteklubben</a>
+
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="burger">
+            <span></span><span></span><span></span>
+        </label>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/members/home">Forside</a></li>
+                <li><a href="/members/list">Medlemmer</a></li>
+                <li><a href="/cats/list">Katte</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="content container">
+    <form th:action="@{/cats/deleteConfirmation/{id}(id=${cat.id})}" method="post" class="form">
+        <div>Vil du gerne slette <span th:text="${cat.name}"> ?</span></div>
+        <button class="btn" type="submit">Slet</button>
+    </form>
+</section>
+
+
+</body>
+</html>

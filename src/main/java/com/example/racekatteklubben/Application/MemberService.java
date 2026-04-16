@@ -33,7 +33,7 @@ public class MemberService {
     public void registerMember(Member member) throws ValidationException {
         //WIP
         // Valider input
-        validation.validateMember(member);
+        validation.validateNewMember(member);
 
 
         // Hash password
@@ -46,7 +46,7 @@ public class MemberService {
         System.out.println("RAW password: " + member.getPassword());
     }
 
-    public Member getMember(String email) throws ValidationException {
+    public Member getMemberByEmail(String email) throws ValidationException {
         //WIP
         return mRepo.getMemberbyEmail(email);
     }

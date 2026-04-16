@@ -9,7 +9,7 @@ public class WebController {
 
     @GetMapping("/index")
     public String index(HttpSession session){
-        session.removeAttribute("loggedInMember");
+        session.invalidate();
         return "/index";
     }
 

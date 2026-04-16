@@ -38,19 +38,15 @@ public class Validation {
         if (member.getName() == null || member.getName().isEmpty()) {
             throw new ValidationException("Medlem skal have navn");
         }
-
         if (member.getEmail() == null || member.getEmail().isEmpty()) {
             throw new ValidationException("Email skal udfyldes");
         }
-
         if (!member.getEmail().contains("@")) {
             throw new ValidationException("Email skal indeholde '@'");
         }
-
         if (member.getPassword() == null || member.getPassword().isEmpty()) {
             throw new ValidationException("Password skal udfyldes");
         }
-
     }
 
     public void validateNewMember(Member member){
@@ -60,7 +56,6 @@ public class Validation {
         if (existing != null) {
             throw new ValidationException("Email er allerede registreret");
         }
-
     }
 
     public void validateLogin(Member member, String password) throws ValidationException {
@@ -68,17 +63,14 @@ public class Validation {
             throw new ValidationException("Bruger eller password forkert");
         }
     }
-
     public void validateString(String word) throws ValidationException {
         if (word == null || word.isEmpty()){
             throw new ValidationException("Venligst udfyld dette");
         }
     }
-
     public void validateInt(int number) throws ValidationException {
         if (number <= 0){
             throw new ValidationException("Venligst indtast et tal over 0");
         }
     }
-
 }

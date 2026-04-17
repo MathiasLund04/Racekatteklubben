@@ -26,6 +26,13 @@ public class MemberController {
         return "/members/register";
     }
 
+    @PostMapping("/register")
+    public String registerMember(@ModelAttribute("member") Member member) {
+
+        memberService.registerMember(member);
+        return "redirect:/members/success";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "/members/login";
@@ -67,13 +74,6 @@ public class MemberController {
         session.invalidate();
 
         return "redirect:/";
-    }
-
-    @PostMapping("/register")
-    public String registerMember(@ModelAttribute("member") Member member) {
-
-        memberService.registerMember(member);
-        return "redirect:/members/success";
     }
 
     @PostMapping("/login")

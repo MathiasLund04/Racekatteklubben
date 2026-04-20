@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Succes</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Title</title>
 </head>
-
 <body>
 
-<header class="header">
+<header class="header" th:fragment="header">
     <div class="container nav-container">
         <a href="/members/home" class="logo">Racekatteklubben</a>
 
@@ -19,21 +17,13 @@
 
         <nav class="nav">
             <ul class="nav-list">
-                <li><a href="/">Forside</a></li>
-                <li><a href="/members/login">Login</a></li>
+                <li><a href="/members/list">Se Medlemmer</a></li>
+                <li><a href="/cats/create">Tilføj kat</a></li>
+                <li><a th:href="@{/members/logout}">Log ud</a></li>
             </ul>
         </nav>
     </div>
 </header>
-
-<section class="content container">
-    <h1>Kat oprettet!</h1>
-
-    <p>
-        <a class="btn" th:href="@{/members/home}">Home</a>
-        <a class="btn" th:href="@{/}">Forside</a>
-    </p>
-</section>
 
 </body>
 </html>

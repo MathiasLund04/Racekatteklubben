@@ -43,25 +43,7 @@ public class CatController {
         Member loggedInMember = (Member) session.getAttribute("loggedInMember");
         cat.setOwner(loggedInMember);
 
-        if (file != null && !file.isEmpty()) {
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
-            Path uploadPath = Paths.get(uploadDir);
-
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            String fileName = file.getOriginalFilename();
-            Path filePath = uploadPath.resolve(fileName);
-
-            Files.write(filePath, file.getBytes());
-
-            cat.setImage(fileName);
-
-            System.out.println("Gemmer billede i: " + filePath);
-        }
-
-        catService.addCat(cat);
+        catService.addCat(cat, file);
         return "redirect:/cats/catSuccess";
     }
 
@@ -83,31 +65,9 @@ public class CatController {
     @PostMapping("/update")
     public String updateCat(@ModelAttribute("cat") Cat cat,
                             @RequestParam(value = "imageFile", required = false) MultipartFile file) throws Exception {
-        Cat existingCat = catService.getCatById(cat.getId());
-
-        if (file != null && !file.isEmpty()) {
-
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
-            Path uploadPath = Paths.get(uploadDir);
-
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            String fileName = file.getOriginalFilename();
-            Path filePath = uploadPath.resolve(fileName);
-
-            Files.write(filePath, file.getBytes());
-
-            cat.setImage(fileName);
-
-        } else {
-            // behold gammelt billede
-            cat.setImage(existingCat.getImage());
-        }
 
 
-        catService.updateCat(cat.getId(), cat);
+        catService.updateCat(cat.getId(), cat, file);
         return "redirect:/cats/catSuccess";
     }
 

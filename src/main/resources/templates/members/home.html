@@ -5,27 +5,9 @@
     <title>Forside</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-
 <body>
 
-<header class="header">
-    <div class="container nav-container">
-        <a href="/" class="logo">Racekatteklubben</a>
-
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="burger">
-            <span></span><span></span><span></span>
-        </label>
-
-        <nav class="nav">
-            <ul class="nav-list">
-                <li><a href="/members/list">Se Medlemmer</a></li>
-                <li><a href="/cats/create">Tilføj kat</a></li>
-                <li><a th:href="@{/members/logout}">Log ud</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<div th:replace="fragments/Header :: header"></div>
 
 <section class="hero">
     <h1>Velkommen til Racekatteklubben</h1>

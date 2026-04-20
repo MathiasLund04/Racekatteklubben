@@ -1,7 +1,5 @@
 package com.example.racekatteklubben.Application.Validation;
-
 import com.example.racekatteklubben.Domain.Cat;
-import com.example.racekatteklubben.Domain.ICatRepository;
 import com.example.racekatteklubben.Domain.IMemberRepository;
 import com.example.racekatteklubben.Domain.Member;
 import org.mindrot.jbcrypt.BCrypt;
@@ -10,11 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Validation {
 
-    private final ICatRepository cRepo;
     private final IMemberRepository mRepo;
 
-    public Validation(ICatRepository cRepo, IMemberRepository mRepo) {
-        this.cRepo = cRepo;
+    public Validation(IMemberRepository mRepo) {
         this.mRepo = mRepo;
     }
 

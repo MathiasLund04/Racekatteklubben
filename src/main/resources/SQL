@@ -22,7 +22,7 @@ Mother varchar(50),
 Breeder varchar(50),
 Image Varchar(255),
 
-FOREIGN KEY (Owner) REFERENCES member(Email)
+FOREIGN KEY (Owner) REFERENCES member(Email) on delete cascade
 );
 
 
